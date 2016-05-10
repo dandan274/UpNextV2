@@ -14,6 +14,7 @@ class RecentRequestsViewCell: UITableViewCell {
     }
     
     var row = 0
+
     @IBOutlet var number: UILabel!
     @IBOutlet var songname: UILabel!
     @IBOutlet var heart: UIButton!
@@ -35,9 +36,7 @@ class RecentRequestsViewCell: UITableViewCell {
             dispatch_after(time, dispatch_get_main_queue()) {
                 NSNotificationCenter.defaultCenter().postNotificationName("refreshMyTableView", object: nil)
             }
-
-           // NSNotificationCenter.defaultCenter().postNotificationName("refreshMyTableView", object: nil)
-            NSUserDefaults.standardUserDefaults().setObject(Liked, forKey: "likes")
+    NSUserDefaults.standardUserDefaults().setObject(Liked, forKey: "likes")
         }
         
         else {
@@ -53,7 +52,6 @@ class RecentRequestsViewCell: UITableViewCell {
             dispatch_after(time, dispatch_get_main_queue()) {
                 NSNotificationCenter.defaultCenter().postNotificationName("refreshMyTableView", object: nil)
             }
-            //NSNotificationCenter.defaultCenter().postNotificationName("refreshMyTableView", object: nil)
              NSUserDefaults.standardUserDefaults().setObject(Liked, forKey: "likes")
         }
 

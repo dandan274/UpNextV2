@@ -7,8 +7,9 @@
 //
 import UIKit
 
-var Requests = [String]()
-var NetVotes = [String : Int]()
+var Requests = ["Latch - Disclosure feat. Sam Smith", "Practice - Drake", "Careless Whisper - George Michael", "My Boo - Ghost Town DJs", "Where is my Mind? - Pixies", "Somewhere on a Beach - Dierks Bentley"]
+var NetVotes = ["Latch - Disclosure feat. Sam Smith" : 21, "Practice - Drake": 16, "Careless Whisper - George Michael": 15, "My Boo - Ghost Town DJs":15, "Where is my Mind? - Pixies": 10, "Somewhere on a Beach - Dierks Bentley": 7, "Colder Weather - Zac Brown Band": 7]
+
 var change = false
 var Liked = [String]()
 
@@ -16,6 +17,13 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet var table: UITableView!
     
+    
+    @IBAction func play(sender: AnyObject) {
+        var song = Requests[0]
+        Requests.removeAtIndex(0)
+        NetVotes.removeValueForKey(song)
+        table.reloadData()
+    }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
      return Requests.count
@@ -36,16 +44,19 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         cell.songname.text = song
         cell.row = indexPath.row
+        print(Requests)
         cell.number.text = String(NetVotes[song]!)
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
-         NSNotificationCenter.defaultCenter().postNotificationName("refreshMyTableView", object: nil)
+        table.reloadData()
+        //NSNotificationCenter.defaultCenter().postNotificationName("refreshMyTableView", object: nil)
     }
     
     func refreshList(notification: NSNotification){
@@ -71,19 +82,19 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList:", name:"refreshMyTableView", object: nil)
         // Do any additional setup after loading the view, typically from a nib.
-        if NSUserDefaults.standardUserDefaults().objectForKey("arr") != nil
-        {
-            Requests = NSUserDefaults.standardUserDefaults().objectForKey("arr") as! [String]
-        }
-        if NSUserDefaults.standardUserDefaults().objectForKey("vote") != nil
-        {
-            NetVotes = NSUserDefaults.standardUserDefaults().objectForKey("vote") as! [String: Int]
-        }
-        if NSUserDefaults.standardUserDefaults().objectForKey("likes") != nil
-        {
-            Liked = NSUserDefaults.standardUserDefaults().objectForKey("likes") as! [String]
-        }
-       
+//        if NSUserDefaults.standardUserDefaults().objectForKey("arr") != nil
+//        {
+//            Requests = NSUserDefaults.standardUserDefaults().objectForKey("arr") as! [String]
+//        }
+//        if NSUserDefaults.standardUserDefaults().objectForKey("vote") != nil
+//        {
+//            NetVotes = NSUserDefaults.standardUserDefaults().objectForKey("vote") as! [String: Int]
+//        }
+//        if NSUserDefaults.standardUserDefaults().objectForKey("likes") != nil
+//        {
+//            Liked = NSUserDefaults.standardUserDefaults().objectForKey("likes") as! [String]
+//        }
+//       
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
